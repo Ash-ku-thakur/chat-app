@@ -44,9 +44,8 @@ export let Register = async (req, res) => {
     let mailProfilePhoto = `https://avatar.iran.liara.run/public/boy?name=${name}`;
     let femailProfilePhoto = `https://avatar.iran.liara.run/public/girl?name=${name}`;
 
-    
     // if not find
-   let userCreated = await User.create({
+    let userCreated = await User.create({
       name,
       username,
       password: hashPassword,
@@ -56,13 +55,23 @@ export let Register = async (req, res) => {
 
     // i want to send a token here
 
-   let token = await jwt.sign({userId:userCreated._id}, process.env.JWT_SECRET_KEY, {expiresIn:"1d"})
+    let token = await jwt.sign(
+      { userId: userCreated._id },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1d" }
+    );
 
-
-    return res.status(201).cookie("uid", token, {httpOnly:rue, sameSite:"strict", maxAge:1*24*60*60*1000}).json({
-      massage: "user created successfully",
-      success: true,
-    });
+    return res
+      .status(201)
+      .cookie("uid", token, {
+        httpOnly: rue,
+        sameSite: "strict",
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+      })
+      .json({
+        massage: "user created successfully",
+        success: true,
+      });
   } catch (error) {
     console.log(error);
   }
@@ -111,11 +120,31 @@ export let Login = async (req, res) => {
 
     return res
       .status(201)
-      .cookie("uid", token, { httpOnly: true, sameSite: "strict", secure:true, maxAge:1*24*60*60*1000 })
+      .cookie("uid", token, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+      })
       .json({
         massage: `welcome back ${user.name}`,
         success: true,
         confirmUser: user,
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// logout
+export let Logout = (req, res) => {
+  try {
+    return res
+      .status(201)
+      .cookie("uid", "", { maxAge: 0, sameSite: "strict", httpOnly: true })
+      .json({
+        massage: "user successfully log out",
+        success: true,
       });
   } catch (error) {
     console.log(error);

@@ -47,3 +47,7 @@ we can match the password with the help of bcrypt.comnfirm method
 we can also set a cookie with the help of jwt.sign method
 
 
+# logout a user
+just set cookie empty
+
+
