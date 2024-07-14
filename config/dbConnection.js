@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
+
+dotenv.config({})
 
 let dbConnection = async () => {
   try {
-    let connection = await mongoose.connect("mongodb://127.0.0.1:27017/chat");
+    let connection = await mongoose.connect(process.env.MONGO_URI);
 
     if (!connection) {
       console.log("db not connected");

@@ -1,13 +1,12 @@
 import User from "../models/userSchema.js";
-import bcrypt from 'bcrypt';
-
+import bcrypt from "bcrypt";
 
 export let Register = async (req, res) => {
   try {
-    let { name, userName, email, password, gender } = req.body;
+    let { name, username, password, gender } = req.body;
 
     // basic validation
-    if (!name || !userName || !email || !password || !gender) {
+    if (!name || !username || !password || !gender) {
       return res.status(401).json({
         massage: "Al fields are required",
         success: false,
@@ -27,21 +26,20 @@ export let Register = async (req, res) => {
 
     // plain password convertef into hash formet
 
-   let hashPassword = await bcrypt.hash(password, 10)
+    let hashPassword = await bcrypt.hash(password, 10);
 
     // if not find
     await User.create({
       name,
-      userName,
-      email,
-      password:hashPassword,
+      username,
+      password: hashPassword,
       gender,
     });
 
     return res.status(201).json({
-        massage:"user created successfully",
-        success:true
-    })
+      massage: "user created successfully",
+      success: true,
+    });
   } catch (error) {
     console.log(error);
   }

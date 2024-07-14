@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
-let Schema =  mongoose.Schema
 
 let userSchema = new mongoose.Schema(
   {
-    _id: Schema.Types.UUID,
     name: {
       type: String,
       required: true,
@@ -11,11 +9,7 @@ let userSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
-    },
-
-    email: {
-      type: String,
-      required: true,
+      unique:true
     },
     password: {
       type: String,
@@ -23,15 +17,16 @@ let userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
+      enum:["mail", "femail"],
       required: true,
     },
-    //   profilePhoto: {
-    //     type: String,
-    //     required: true,
-    //   },
+    profilePhoto: {
+      type: String,
+      default:""
+    },
   },
   { timestamps: true }
 );
 
 let User = mongoose.model("User", userSchema);
-export default User
+export default User;
