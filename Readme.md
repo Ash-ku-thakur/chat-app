@@ -65,7 +65,7 @@ call next()
 # OutherUser
 get all user exepct loggedinUser
 with the help of $en method
-await User.find({_id: {$ne : loggedinUserId}})
+await User.find({_id: {$ne : loggedinUserId}}) ($ne = not equal)
 
 
 

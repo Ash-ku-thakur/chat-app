@@ -164,7 +164,7 @@ export let OtherUsers = async (req, res) => {
       });
     }
 
-    let loggedinUser = await User.find({_id: {$ne : loggedinUserId}})
+    let loggedinUser = await User.find({_id: {$ne : loggedinUserId}}).select("-password")
     return res.status(201).json({
       loggedinUser
     })

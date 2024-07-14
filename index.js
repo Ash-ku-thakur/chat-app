@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import dbConnection from "./config/dbConnection.js";
 import userRouter from "./routers/userRouter.js";
-import cookieParser from 'cookie-parser';
+import massageRouter from "./routers/massageRouter.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config({});
 dbConnection();
@@ -10,12 +11,13 @@ dbConnection();
 let app = express();
 
 // middelware
-app.use(express.urlencoded({extended:true})) // form se data ayga
-app.use(express.json()) // data json me ayga
-app.use(cookieParser()) // get the cookie value
+app.use(express.urlencoded({ extended: true })); // form se data ayga
+app.use(express.json()); // data json me ayga
+app.use(cookieParser()); // get the cookie value
 
 // routers
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/massage", massageRouter);
 
 app.listen(process.env.PORT, (req, res) => {
   console.log(`server started on ${process.env.PORT}`);
