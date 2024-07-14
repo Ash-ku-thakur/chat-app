@@ -64,7 +64,7 @@ export let Register = async (req, res) => {
     return res
       .status(201)
       .cookie("uid", token, {
-        httpOnly: rue,
+        httpOnly: true,
         sameSite: "strict",
         maxAge: 1 * 24 * 60 * 60 * 1000,
       })
@@ -146,6 +146,29 @@ export let Logout = (req, res) => {
         massage: "user successfully log out",
         success: true,
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// other users
+export let OtherUsers = async (req, res) => {
+  try {
+    let loggedinUserId = req.id;
+
+    // basic validation
+    if (!loggedinUserId) {
+      return res.status(401).json({
+        massage: "you are not authenticated",
+        success: false,
+      });
+    }
+
+    let loggedinUser = await User.find({_id: {$ne : loggedinUserId}})
+    return res.status(201).json({
+      loggedinUser
+    })
+
   } catch (error) {
     console.log(error);
   }

@@ -50,4 +50,29 @@ we can also set a cookie with the help of jwt.sign method
 # logout a user
 just set cookie empty
 
+# Authentication middleware
+
+get the cookie.uid with the help of cookir-parser package
+takeOut userId in uid
+
+check cookie.uid is write or not
+
+and set req.id = token.userId
+
+call next()
+
+
+# OutherUser
+get all user exepct loggedinUser
+with the help of $en method
+await User.find({_id: {$ne : loggedinUserId}})
+
+
+
+
+
+
+
+
+
 
