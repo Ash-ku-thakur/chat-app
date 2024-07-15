@@ -1,7 +1,7 @@
 import Conversation from "../models/conversationSchema.js";
 import Massage from "../models/massageSchema.js";
 
-export let SendMassage = async (req, res) => {
+export let CreateMassage = async (req, res) => {
   try {
     let { massage } = req.body;
     let loggedinUserId = req.id;
@@ -27,9 +27,13 @@ export let SendMassage = async (req, res) => {
     //   getPeoples.massages.push(data);
     // }
     if (!getPeoples.massages.includes(createMassage._id)) {
-      let ch = await Conversation.findByIdAndUpdate(getPeoples._id, {
-        $push: { massages: createMassage._id },
-      });
+      let ch = await Conversation.findByIdAndUpdate(
+        getPeoples._id,
+        {
+          $push: { massages: createMassage._id },
+        },
+        { returnDocument: "after" }
+      );
 
       return res.status(201).json({
         ch,
@@ -37,6 +41,24 @@ export let SendMassage = async (req, res) => {
     }
 
     // socket io
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export let ReceveMassage = async (req, res) => {
+  try {
+    let receverId = req.params.id;
+    let loggedinUserId = req.id;
+
+    let findConversation = await Conversation.find({
+      participants: { $all: [loggedinUserId, receverId] },
+    }).populate("massages");
+
+    return res.status(201).json({
+      massages: "hy",
+      findConversation,
+    });
   } catch (error) {
     console.log(error);
   }

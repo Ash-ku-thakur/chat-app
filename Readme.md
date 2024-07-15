@@ -11,8 +11,6 @@ userSchema for create user
 massageSchema for create massage
 conversationSchema for kiskis ke bich , aur kiakia baat
 
-
-
 # Array jisme jisjis ke bich baat hogi uski Ids
 
 participants: [
@@ -40,14 +38,15 @@ we can hash password with the help of bcrypt.hash method
 we can set cookie after create a user with the help of jwt.sign method
 
 # login a user
+
 password, username
 
 we can match the password with the help of bcrypt.comnfirm method
 
 we can also set a cookie with the help of jwt.sign method
 
-
 # logout a user
+
 just set cookie empty
 
 # Authentication middleware
@@ -61,18 +60,24 @@ and set req.id = token.userId
 
 call next()
 
-
 # OutherUser
+
 get all user exepct loggedinUser
 with the help of $en method
 await User.find({_id: {$ne : loggedinUserId}}) ($ne = not equal)
 
+# CreateMassage with Conversation
 
+loggedinUser communicate with other users
 
+create a conversation here if not created before yet
 
+-----====----- after creating the conversation we have to create a massage (object)
 
+after creation push the massage to this conversation.massages(Array)
 
+# ReceveMassage
 
+loggedinUser sends the massages to the other user that called him /her (recever)
 
-
-
+and find only those one conversation and after find populate those massages that we pushed
