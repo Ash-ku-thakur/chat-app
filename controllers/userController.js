@@ -123,7 +123,7 @@ export let Login = async (req, res) => {
       .cookie("uid", token, {
         httpOnly: true,
         sameSite: "strict",
-        secure: true,
+        // secure: true,
         maxAge: 1 * 24 * 60 * 60 * 1000,
       })
       .json({
@@ -164,11 +164,12 @@ export let OtherUsers = async (req, res) => {
       });
     }
 
-    let loggedinUser = await User.find({_id: {$ne : loggedinUserId}}).select("-password")
+    let loggedinUser = await User.find({ _id: { $ne: loggedinUserId } }).select(
+      "-password"
+    );
     return res.status(201).json({
-      loggedinUser
-    })
-
+      loggedinUser,
+    });
   } catch (error) {
     console.log(error);
   }
