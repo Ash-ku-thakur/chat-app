@@ -123,13 +123,12 @@ export let Login = async (req, res) => {
       .cookie("uid", token, {
         httpOnly: true,
         sameSite: "strict",
-        // secure: true,
         maxAge: 1 * 24 * 60 * 60 * 1000,
       })
       .json({
         massage: `welcome back ${user.name}`,
         success: true,
-        confirmUser: user,
+         user,
       });
   } catch (error) {
     console.log(error);
